@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Quiz</title>
+    <!-- jquery for maximum compatibility -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+    /** Simple JavaScript Quiz
+     * version 0.1.0
+     * http://journalism.berkeley.edu
+     * created by: Jeremy Rue @jrue
+     *
+     * Copyright (c) 2013 The Regents of the University of California
+     * Released under the GPL Version 2 license
+     * http://www.opensource.org/licenses/gpl-2.0.php
+     * This program is distributed in the hope that it will be useful, but
+     * WITHOUT ANY WARRANTY; without even the implied warranty of
+     * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+     */
+    var quiztitle = "Quiz Title";
+    /**
+    * Set the information about your questions here. The correct answer string needs to match
+    * the correct choice exactly, as it does string matching. (case sensitive)
+    *
+    */
+    var quiz = [
+        {
+            "question"      :   "Who was the president in 1993?",
+            "image"         :   "",
+            "choices"       :   [
+                                    "George W. Bush",
+                                    "Jimmy Carter",
+                                    "Bill Clinton",
+                                    "George H.W. Bush"
+                                ],
+            "correct"       :   "Bill Clinton",
+            "explanation"   :   "Bill Clinton was our 42nd US president.",
+			"clue"			:	"This is your 1st clue",
+        },
+        {
+            "question"      :   "Who won the Super Bowl in 1993?",
+            "image"         :   "",
+            "choices"       :   [
+                                    "Dallas Cowboys",
+                                    "Cleveland Browns",
+                                    "New England Patriots",
+                                    "Miami Dolphins"
+                                ],
+            "correct"       :   "Dallas Cowboys",
+            "explanation"   :   "The Dallas Cowboys defeated the Buffalo Bills in Super Bowl XXVIII.",
+			"clue"			:	"This is your 2nd clue",
+		},
+        {
+            "question"      :   "What car was OJ Simpson in when fleeing the poice in June of 1994?",
+            "image"         :   "",
+            "choices"       :   [
+                                    "Ford Explorer",
+                                    "GMC Yukon",
+                                    "Ford Bronco",
+                                    "Cadillac Escalade"
+                                ],
+            "correct"       :   "Ford Bronco",
+            "explanation"   :   "OJ Simpson's close friend and former teammate, Al Cowlings, was driving the white Bronco.",
+			"clue"			:	"This is your 3rd clue",			
+        },
+        {
+            "question"      :   "'My momma always said that life was like a box of chocolates, you never know what you're gonna get' is a quote from what movie released in 1994?",
+            "image"         :   "",
+            "choices"       :   [
+                                    "Speed",
+                                    "Forrest Gump",
+                                    "Pulp Fiction",
+                                    "The Shawshank Redemption"
+                                ],
+            "correct"       :   "Forrest Gump",
+            "explanation"   :   "Forrest Gump opened on July 6, 1994 and grossed over $678 million worldwide.",
+			"clue"			:	"This is your 4th clue",			
+        },
+        {
+            "question"      :   "The first online purchase was made in January 1994, what was it?",
+            "image"         :   "",
+            "choices"       :   [
+                                    "A computer from Apple",
+                                    "Cassette tape from the band Megadeath",
+                                    "Microsoft Office disks from Microsoft",
+                                    "Pizza from Pizza Hut"
+                                ],
+            "correct"       :   "Pizza from Pizza Hut",
+            "explanation"   :   "The person ordered a large pepperoni, mushroom and extra cheese pizza.",
+			"clue"			:	"This is your 3rd clue",			
+        },
+        {
+            "question"      :   "What was the #1 TV show in 1994?",
+            "image"         :   "",
+            "choices"       :   [
+                                    "Seinfeld",
+                                    "ER",
+                                    "The Young and the Restless",
+                                    "The Simpsons"
+                                ],
+            "correct"       :   "Seinfeld",
+            "explanation"   :   "Seinfeld ran for nine seasons from July 1989 to May 1998",
+			"clue"			:	"This is your 3rd clue",			
+        },
+        {
+            "question"      :   "What day of the week was October 24, 1994 on?",
+            "image"         :   "",
+            "choices"       :   [
+                                    "Sunday",
+                                    "Monday",
+                                    "Thursday",
+                                    "Friday"
+                                ],
+            "correct"       :   "Monday",
+            "explanation"   :   "Nothing much to say here, wasn't a Sunday, Thursday or Friday :).",
+			"clue"			:	"This is your 3rd clue",			
+        },
+        {
+            "question"      :   "What annual, major sporting event was not held in 1994?",
+            "image"         :   "",
+            "choices"       :   [
+                                    "NBA Finals",
+                                    "World Cup",
+                                    "Stanley Cup",
+                                    "World Series"
+                                ],
+            "correct"       :   "World Series",
+            "explanation"   :   "The World Series was canceled because of the Major League Baseball strike.",
+			"clue"			:	"This is your 3rd clue",			
+        },
+        {
+            "question"      :   "What is the birth flower for October?",
+            "image"         :   "",
+            "choices"       :   [
+                                    "Carnation",
+                                    "Marigold",
+                                    "Rose",
+                                    "Tulip"
+                                ],
+            "correct"       :   "Marigold",
+            "explanation"   :   "Kind of a lame flower if you ask me!",
+			"clue"			:	"This is your 3rd clue",			
+        },
+        {
+            "question"      :   "What was the minimum wage in 1994?",
+            "image"         :   "",
+            "choices"       :   [
+                                    "4.30",
+                                    "4.00",
+                                    "4.25",
+                                    "3.80"
+                                ],
+            "correct"       :   "4.25",
+            "explanation"   :   "$4.25 an hour equates to about $8,840 per year",
+			"clue"			:	"This is your 3rd clue",			
+        },
+        {
+            "question"      :   "What was the average price for a gallon of gas in 1994?",
+            "image"         :   "",
+            "choices"       :   [
+                                    "0.99",
+                                    "1.22",
+                                    "1.11",
+                                    "1.03"
+                                ],
+            "correct"       :   "1.11",
+            "explanation"   :   "Compare that to today's average price of $3.74 per gallon.",
+			"clue"			:	"This is your 3rd clue",			
+        },
+        {
+            "question"      :   "What was the cost of a 1st class stamp in 1994?",
+            "image"         :   "",
+            "choices"       :   [
+                                    "0.29",
+                                    "0.20",
+                                    "0.33",
+                                    "0.25"
+                                ],
+            "correct"       :   "0.29",
+            "explanation"   :   "The current price of a 1st class stamp is 0.73.",
+			"clue"			:	"This is your 3rd clue",			
+        },
+    ];
+/*
+question: "The image of Santa Claus flying his sleigh began in 1819 and was created by Washington Irving, the same author who dreamt up the Headless Horseman.",
+
+
+
+”.
+
+*/
+
+    /******* No need to edit below this line *********/
+    var currentquestion = 0, score = 0, submt=true, picked;
+    jQuery(document).ready(function($){
+        /**
+         * HTML Encoding function for alt tags and attributes to prevent messy
+         * data appearing inside tag attributes.
+         */
+        function htmlEncode(value){
+          return $(document.createElement('div')).text(value).html();
+        }
+        /**
+         * This will add the individual choices for each question to the ul#choice-block
+         *
+         * @param {choices} array The choices from each question
+         */
+        function addChoices(choices){
+            if(typeof choices !== "undefined" && $.type(choices) == "array"){
+                $('#choice-block').empty();
+                for(var i=0;i<choices.length; i++){
+                    $(document.createElement('li')).addClass('choice choice-box').attr('data-index', i).text(choices[i]).appendTo('#choice-block');
+                }
+            }
+        }
+
+        /**
+         * Resets all of the fields to prepare for next question
+         */
+        function nextQuestion(){
+            submt = true;
+            $('#explanation').empty();
+			$('#clue').empty();
+            $('#question').text(quiz[currentquestion]['question']);
+            $('#pager').text('Question ' + Number(currentquestion + 1) + ' of ' + quiz.length);
+            if(quiz[currentquestion].hasOwnProperty('image') && quiz[currentquestion]['image'] != ""){
+                if($('#question-image').length == 0){
+                    $(document.createElement('img')).addClass('question-image').attr('id', 'question-image').attr('src', quiz[currentquestion]['image']).attr('alt', htmlEncode(quiz[currentquestion]['question'])).insertAfter('#question');
+                } else {
+                    $('#question-image').attr('src', quiz[currentquestion]['image']).attr('alt', htmlEncode(quiz[currentquestion]['question']));
+                }
+            } else {
+                $('#question-image').remove();
+            }
+            addChoices(quiz[currentquestion]['choices']);
+            setupButtons();
+        }
+        /**
+         * After a selection is submitted, checks if its the right answer
+         *
+         * @param {choice} number The li zero-based index of the choice picked
+         */
+        function processQuestion(choice){
+            if(quiz[currentquestion]['choices'][choice] == quiz[currentquestion]['correct']){
+                $('.choice').eq(choice).css({'background-color':'#50D943'});
+                $('#explanation').html('<strong>Correct!</strong> ' + htmlEncode(quiz[currentquestion]['explanation']) + '<br>' + htmlEncode(quiz[currentquestion]['clue']));
+                score++;
+            } else {
+                $('.choice').eq(choice).css({'background-color':'#D92623'});
+                $('#explanation').html('<strong>Incorrect.</strong> The correct answer is ' + htmlEncode(quiz[currentquestion]['correct']) + '.<br>' + htmlEncode(quiz[currentquestion]['explanation']));
+            }
+            currentquestion++;
+            $('#submitbutton').html('NEXT QUESTION &raquo;').on('click', function(){
+                if(currentquestion == quiz.length){
+                    endQuiz();
+                } else {
+                    $(this).text('Check Answer').css({'color':'#222'}).off('click');
+                    nextQuestion();
+                }
+            })
+        }
+        /**
+         * Sets up the event listeners for each button.
+         */
+        function setupButtons(){
+            $('.choice').on('mouseover', function(){
+                $(this).css({'background-color':'#e1e1e1'});
+            });
+            $('.choice').on('mouseout', function(){
+                $(this).css({'background-color':'#fff'});
+            })
+            $('.choice').on('click', function(){
+                picked = $(this).attr('data-index');
+                $('.choice').removeAttr('style').off('mouseout mouseover');
+                $(this).css({'border-color':'#222','font-weight':700,'background-color':'#c1c1c1'});
+                if(submt){
+                    submt=false;
+                    $('#submitbutton').css({'color':'#000'}).on('click', function(){
+                        $('.choice').off('click');
+                        $(this).off('click');
+                        processQuestion(picked);
+                    });
+                }
+            })
+        }
+
+        /**
+         * Quiz ends, display a message.
+         */
+        function endQuiz(){
+            $('#explanation').empty();
+            $('#question').empty();
+            $('#choice-block').empty();
+            $('#submitbutton').remove();
+            $('#question').text("You got " + score + " out of " + quiz.length + " correct.");
+            $(document.createElement('h2')).css({'text-align':'center', 'font-size':'4em'}).text(Math.round(score/quiz.length * 100) + '%').insertAfter('#question');
+        }
+        /**
+         * Runs the first time and creates all of the elements for the quiz
+         */
+        function init(){
+            //add title
+            if(typeof quiztitle !== "undefined" && $.type(quiztitle) === "string"){
+                $(document.createElement('h1')).text(quiztitle).appendTo('#frame');
+            } else {
+                $(document.createElement('h1')).text("Quiz").appendTo('#frame');
+            }
+            //add pager and questions
+            if(typeof quiz !== "undefined" && $.type(quiz) === "array"){
+                //add pager
+                $(document.createElement('p')).addClass('pager').attr('id','pager').text('Question 1 of ' + quiz.length).appendTo('#frame');
+                //add first question
+                $(document.createElement('h2')).addClass('question').attr('id', 'question').text(quiz[0]['question']).appendTo('#frame');
+                //add image if present
+                if(quiz[0].hasOwnProperty('image') && quiz[0]['image'] != ""){
+                    $(document.createElement('img')).addClass('question-image').attr('id', 'question-image').attr('src', quiz[0]['image']).attr('alt', htmlEncode(quiz[0]['question'])).appendTo('#frame');
+                }
+                $(document.createElement('p')).addClass('explanation').attr('id','explanation').html('&nbsp;').appendTo('#frame');
+
+                //questions holder
+                $(document.createElement('ul')).attr('id', 'choice-block').appendTo('#frame');
+
+                //add choices
+                addChoices(quiz[0]['choices']);
+
+                //add submit button
+                $(document.createElement('div')).addClass('choice-box').attr('id', 'submitbutton').text('Check Answer').css({'font-weight':700,'color':'#222','padding':'30px 0'}).appendTo('#frame');
+
+                setupButtons();
+            }
+        }
+
+        init();
+    });
+    </script>
+    <style type="text/css" media="all">
+        /*css reset */
+        html,body,div,span,h1,h2,h3,h4,h5,h6,p,code,small,strike,strong,sub,sup,b,u,i{border:0;font-size:100%;font:inherit;vertical-align:baseline;margin:0;padding:0;}
+        article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}
+        body{line-height:1; font:normal 0.9em/1em "Helvetica Neue", Helvetica, Arial, sans-serif;}
+        ol,ul{list-style:none;}
+        strong{font-weight:700;}
+        #frame{max-width:620px;width:auto;border:1px solid #ccc;background:#fff;padding:10px;margin:3px;}
+        h1{font:normal bold 2em/1.8em "Helvetica Neue", Helvetica, Arial, sans-serif;text-align:left;border-bottom:1px solid #999;padding:0;width:auto}
+        h2{font:italic bold 1.3em/1.2em "Helvetica Neue", Helvetica, Arial, sans-serif;padding:0;text-align:center;margin:20px 0;}
+        p.pager{margin:5px 0 5px; font:bold 1em/1em "Helvetica Neue", Helvetica, Arial, sans-serif;color:#999;}
+        img.question-image{display:block;max-width:250px;margin:10px auto;border:1px solid #ccc;width:100%;height:auto;}
+        #choice-block{display:block;list-style:none;margin:0;padding:0;}
+        #submitbutton{background:#5a6b8c;}
+        #submitbutton:hover{background:#7b8da6;}
+        #explanation{margin:0 auto;padding:20px;width:75%;}
+        .choice-box{display:block;text-align:center;margin:8px auto;padding:10px 0;border:1px solid #666;cursor:pointer;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;}
+    </style>
+</head>
+<body>
+    <div id="frame" role="content"></div>
+</body>
+</html>
